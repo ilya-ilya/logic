@@ -1,0 +1,86 @@
+\documentclass[a4paper, 12pt, num=Г4]{listok}
+\usepackage{bm}
+\usepackage{scalerel}
+\usepackage{tikz}
+\usepackage{epigraph}
+\usepackage{bussproofs}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{rotating}
+\usepackage{mathtools}
+\usetikzlibrary{matrix}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows}
+
+\newcommand*{\MP}{\mathrm{MP}}
+\renewcommand{\phi}{\varphi}
+\DeclareMathOperator{\Dom}{Dom}
+%\newcommand*{\hm}[1]{#1\nobreak\discretionary{}{\hbox{$\mathsurround=0pt #1$}}{}} %перед знаком для его дублирования при переносе формулы
+
+\begin{document}
+\title{Обоснование кодирования}
+\maketitle
+Пусть $T$ некоторая теория в языке арифметики.
+\begin{definition}
+	Отношение $P(\vec{x}) \subseteq \N^k$ \textit{разрешимо} в $T$,
+	если существует формула $\phi(\vec x)$ , что $\forall{\vec n}$
+	\begin{align*}
+		P(\vec n) & \Rightarrow T \vdash \phi(\underline{\vec n}) \\
+		\neg P(\vec n) & \Rightarrow T \vdash \neg \phi(\underline{\vec n })
+	\end{align*}
+\end{definition}
+\begin{definition}
+	Функция $f(\vec x )$ \textit{представима} в $T$, если существует $\phi (\vec x , y)$ такая, что:
+	\begin{gather*}
+		f(\vec n) = m \Rightarrow T \vdash \phi(\underline{\vec n}, \underline{m}),\\
+		T \vdash \forall y (\phi(\underline{\vec n}, y) \to y = \underline{m}).
+	\end{gather*}
+\end{definition}
+Для того, чтобы можно было формулировать в арифметике утверждения, подобные теоремам Гёделя (о доказуемости чего-либо в арифметике)
+нам понадобиться следующая теорема, обосновывающая тот синтаксис, который мы ввели в предыдущем листке.
+\begin{theorem}[Обоснования]
+	\begin{itemize}
+		\item Любая ПРФ $\Sigma_1$-определима в $\N$;
+		\item Рассмотрим $\mathrm{PA}$, в которой схему индукции заменим аксиомой\footnote{Такая
+			теория называется \textit{арифметикой Робинсона} $Q$.
+			В ней, в отличии от $\mathrm{PA}$ конечное число аксиом.} $\forall y (y \ne 0 \to \exists x y = S(x)$.
+			В $Q$ разрешимы все ПР отношения и представимы все ПРФ.
+	\end{itemize}
+\end{theorem}
+\begin{definition}
+	Функция $\beta(x, y, z) = rm((z + 1) \cdot y + 1, x)$ называется $\beta$ функцией Гёделя.
+\end{definition}
+\begin{problem}
+	Покажите, что $\beta$ является $\Sigma_1$-определимой.
+\end{problem}
+\begin{problem}
+	Пусть $m = \max(n, k_0, \dots, k_n)$, $c = m!$, $u_i = c(i + 1) + 1$.
+	Покажите, что $(u_i, u_j) = 1$, если $i \ne j$.
+\end{problem}
+\begin{theorem}[Китайская теорема об остатках]
+\[
+	\forall{\{k_0, \dots, k_n\}} \exists{b < u_1, \dots, u_n} \forall{i \le n} b \equiv k_i (\mathrm{mod}\; u_i)
+\]
+\end{theorem}
+\begin{problem}
+	Докажите, что
+	\[
+		\forall{\{k_0, \dots, k_n\}} \exists{a, b} \forall{i \le n} \beta(a, b, i) = k_i.
+	\]
+\end{problem}
+\begin{problem}
+	Докажите, что любая ПРФ $\Sigma_1$-определима в $\N$.
+\end{problem}
+\begin{problem}
+	Докажите, что всякая $\Delta_0$-формула разрешима в $Q$.
+\end{problem}
+\begin{problem}
+	Докажите, что всякая вычислимая формула представима в $Q$.
+\end{problem}
+\begin{problem}
+	Докажите, что всякая $\Sigma_1$-формула разрешима в $Q$.
+\end{problem}
+\begin{problem}
+	Завершите доказательство второго пункта теоремы Обоснования.
+\end{problem}
+\end{document}

@@ -1,0 +1,89 @@
+\documentclass[a4paper, 12pt, num=Г3, date = ??.01.2019]{listok}
+\usepackage{bm}
+\usepackage{scalerel}
+\usepackage{tikz}
+\usepackage{epigraph}
+\usepackage{bussproofs}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{rotating}
+\usepackage{mathtools}
+\usetikzlibrary{matrix}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows}
+
+\newcommand*{\MP}{\mathrm{MP}}
+\renewcommand{\phi}{\varphi}
+\DeclareMathOperator{\Dom}{Dom}
+%\newcommand*{\hm}[1]{#1\nobreak\discretionary{}{\hbox{$\mathsurround=0pt #1$}}{}} %перед знаком для его дублирования при переносе формулы
+
+\begin{document}
+\title{Кодирование}
+\maketitle
+Наша цель была научиться говорить о выводимости в $\mathrm{PA}$ языком арифметики.
+В прошлом листке мы поняли, что рекурсивные функции могут быть хорошим подспорьем в этом деле.
+Осталось эту возможность реализовать.
+
+Пусть $\Sigma$  не более чем счётная сигнатура, содержащая функциональные символы $\{f_i^n\}$,
+предикатные символы $\{R_i^n\}$, переменные $v_0 , v_1 , \dots$
+Например, положим $=$ как $R_0^2$,
+$0$ как $f_0^0$, $S$ есть $f_0^1$ и так далее.
+Наша цель  приписать гёделевы номера объектам языка, чтобы разным объектам соответствовали разные натуральные числа,
+а смысл слова мог бы определяться примитивно-рекурсивным образом.
+Обозначив гёделев номер объекта $A$ как $\lceil A \rceil$, распределим номера, скажем, так:
+\[
+	\lceil v_i   \rceil  \coloneqq \langle 1, i \rangle, 
+	\lceil f_i^n \rceil  \coloneqq \langle 2, \langle n, i \rangle \rangle, 
+	\lceil R_i^n \rceil  \coloneqq \langle 3, \langle n, i \rangle \rangle, 
+	\lceil \neg  \rceil  \coloneqq \langle 4, 0 \rangle, 
+	\lceil \to  \rceil  \coloneqq \langle 4, 1 \rangle, 
+	\lceil \forallsym  \rceil  \coloneqq \langle 4, 3 \rangle.
+\]
+\begin{problem}
+	Объясняет почему квантору существования и остальным логическим связкам не нужны отдельные гёделевые номера.
+\end{problem}
+Дальше можно этот язык расширить на более сложные конструкции, например:
+$\lceil (A \to B) \rceil = \langle \lceil \to \rceil, \lceil A \rceil, \lceil B \rceil \rangle$,
+$\lceil \forall {v_i} A \rceil = \langle \lceil \forallsym \rceil, \lceil v_i \rceil, \lceil A \rceil \rangle$.
+\begin{problem}
+	Докажите, что $\mathrm{Tm}(x) = \text{<<$x$ есть гёделев номер терма>>}$ является примитивно рекурсивной.
+\end{problem}
+\begin{problem}
+	Докажите, что $\mathrm{AtFm}(x) = \text{<<$x$ есть гёделев номер атомарной формулы>>}$ является примитивно рекурсивной.
+\end{problem}
+\begin{problem}
+	Докажите, что $\mathrm{Fm}(x) = \text{<<$x$ есть гёделев номер формулы>>}$ является примитивно рекурсивной.
+\end{problem}
+\begin{definition}
+	\textit{Нумерал} $\underline{n}$ --- это терм $\underbrace{S(\dots S(0)\dots)}_n$
+\end{definition}
+\begin{problem}
+	Покажите, что $nm(x) \coloneqq \lceil \underline x \rceil$ и $\mathrm{Num}(x) = \text{<<$x$ есть гёделев номер нумерала>>}$ примитивно рекурсивны.
+\end{problem}
+\begin{problem}
+	Докажите, что $\mathrm{Sub}(x, i, y) =$ <<результат подстановки в $x$ выражения $y$ вместо свободных вхождений переменной $v_i$>>
+	является примитивно рекурсивной.
+	Другими словами, если $x = \lceil \phi \rceil$, то выполняется
+	$\mathrm{Sub}(\lceil \phi \rceil, i, \lceil t \rceil) = \lceil \phi [v_i /t]\rceil$.
+\end{problem}
+\begin{problem}
+	Докажите, что $\mathrm{Free}(x, y) =$ <<$x$ есть гёделев номер переменной, имеющей свободное вхождение в выражение с номером $y$>>
+	является примитивно рекурсивной.
+\end{problem}
+\begin{problem}
+	Покажите, что следующие предикаты примитивно рекурсивны <<$x$ есть код подформулы формулы с кодом $y$>>,
+	<<$t$ подстановочен в $\phi$ вместо свободного вхождения переменной $v_i$>>,
+\end{problem}
+\begin{definition}
+	Пусть $\mathrm{Ax}_i(x) = \text{<<$x$ есть код применения $i$-ой аксиомы $\textrm{Cl}$>>}$,
+	$\mathrm{Log}(x) = \bigvee \mathrm{Ax}_i(x)$,
+	$\mathrm{MP}(x, y, z) = (y = \langle \lceil \to \rceil, x, y \rangle) \& x, y, z \in \mathrm{Fm}$ (выводимость по modus ponens),
+	$\mathrm{Gen}(x, i, y) = (y = \langle \lceil \forallsym \rceil, \lceil v_i \rceil, x \rangle)$ (применение квантора всеобщности).
+\end{definition}
+\begin{problem}
+	Покажите, что $\mathrm{Ax}_i$, $\mathrm{Log}$, $\mathrm{MP}$, $\mathrm{Gen}$ являются примитивно рекурсивными.
+\end{problem}
+\begin{problem}
+	Докажите, что $\mathrm{Prf}(x, y) = \text{<<$x$ есть вывод $y$ в языке предикатов>>}$ является примитивно рекурсивной.
+\end{problem}
+\end{document}

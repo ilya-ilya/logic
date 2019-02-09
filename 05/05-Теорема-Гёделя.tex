@@ -1,0 +1,80 @@
+\documentclass[a4paper, 12pt, num=Г5]{listok}
+\usepackage{bm}
+\usepackage{scalerel}
+\usepackage{tikz}
+\usepackage{epigraph}
+\usepackage{bussproofs}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{rotating}
+\usepackage{mathtools}
+\usetikzlibrary{matrix}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows}
+
+\newcommand*{\MP}{\mathrm{MP}}
+\renewcommand{\phi}{\varphi}
+\DeclareMathOperator{\Dom}{Dom}
+%\newcommand*{\hm}[1]{#1\nobreak\discretionary{}{\hbox{$\mathsurround=0pt #1$}}{}} %перед знаком для его дублирования при переносе формулы
+
+\begin{document}
+\title{Теоремы Гёделя}
+\maketitle
+\begin{definition}
+	Введём предикат \textit{доказуемости} в арифметике
+	\[
+		\mathrm{Pr}(x) = \exists y \mathrm{Prf}(y, x).
+	\]
+\end{definition}
+\begin{theorem}[Первая теорема Гёделя о неполноте]
+	Существует замкнутая формула $\phi$ такая, что $\N \models \phi$, $\mathrm{PA} \not \vdash \phi$.
+\end{theorem}
+\begin{problem}[(Лемма о неподвижной точке)]
+	Пусть $\psi(x_i)$ --- формула с единственной свободной переменной $x_i$.
+	Докажите\footnote{Ответ: $\theta(x) = \psi(\mathrm{Sub}(x,i,x))$, $m = \lceil \theta \rceil$, $\phi = \theta(\underline m)$},
+	что найдётся такая арифметическая замкнутая формула $\phi$, что
+	\[
+		\mathrm{PA} \vdash \phi \leftrightarrow \psi(\lceil \phi \rceil).
+	\]
+\end{problem}
+\begin{problem}
+	Применив лемму о неподвижной точке к $\neg \mathrm{Pr}$ докажите первую теорему Гёделя.
+\end{problem}
+\begin{definition}
+	Рассмотрим \textit{формулу непротиворечивости арифметики Пеанно}
+	\[
+		\mathrm{Consis} = \neg \mathrm{Pr}(\lceil 0 = 1 \rceil)
+	\]
+\end{definition}
+Введём обозначения: $\perp = (0 = 1)$, $\Box \psi = \mathrm{Pr}(\lceil \psi \rceil)$.
+Следующие теоремы доказываются одна за другой.
+\begin{theorem}[Гильберт, Бернайс, Гёдель, Леб]
+	Для любых замкнутых $\phi$, $\psi$ верно, что
+	\begin{align*}
+		\mathrm{PA} \vdash \phi &\Rightarrow \mathrm{PA} \vdash \Box \phi \\
+		\mathrm{PA} &\vdash \Box(\phi \to \psi) \to (\Box \phi \to \Box \psi) \\
+		\mathrm{PA} &\vdash \Box \phi \to \Box \Box \phi
+	\end{align*}
+\end{theorem}
+\begin{theorem}[Вторая теорема Гёделя о неоплноте]
+	\[
+		\mathrm{PA} \not \vdash \mathrm{Consis}.
+	\]
+\end{theorem}
+\begin{theorem}[Леб]
+	Если $\mathrm{PA} \vdash \Box \phi \to \phi$, то $\mathrm {PA} \vdash \phi$.
+\end{theorem}
+\begin{theorem}[Тарского]
+	Не существует формулы $T(x)$ такой, что для всех замкнутых формул $\phi$
+	\[
+		\N \models \phi \Leftrightarrow \N \models T(\lceil \phi \rceil).
+	\]
+	Эквивалентная формулировка: одноместный предикат <<$x$ есть гёделев номер формулы, истинной в $\N$>> не является арифметическим.
+\end{theorem}
+\begin{theorem}
+	$Q$ и $\mathrm{PA}$ неразрешимы.
+\end{theorem}
+\begin{theorem}
+	Исчисление предикатов в сигнатуре арифметики неразрешимо.
+\end{theorem}
+\end{document}

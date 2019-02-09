@@ -1,0 +1,78 @@
+\documentclass[a4paper, 12pt, num=Г2]{listok}
+\usepackage{bm}
+\usepackage{scalerel}
+\usepackage{tikz}
+\usepackage{epigraph}
+\usepackage{bussproofs}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{rotating}
+\usetikzlibrary{matrix}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows}
+
+\newcommand*{\MP}{\mathrm{MP}}
+\renewcommand{\phi}{\varphi}
+\DeclareMathOperator{\Dom}{Dom}
+%\newcommand*{\hm}[1]{#1\nobreak\discretionary{}{\hbox{$\mathsurround=0pt #1$}}{}} %перед знаком для его дублирования при переносе формулы
+
+\begin{document}
+\title{Арифметическая иерархия}
+\maketitle
+Будем рассматривать арифметику $\mathrm{PA}(+, \cdot, 0, S, =, \le)$,
+где $x \le y \leftrightarrow \exists z x + z = y$.
+Введём два обозначения
+\begin{align*}
+	\forall{ x \le t }\phi(x) & \stackrel{def}{\Leftrightarrow} \forall x (x \le t \to \phi(x)), \\
+	\exists{ x \le t }\phi(x) & \stackrel{def}{\Leftrightarrow} \exists x (x \le t \&  \phi(x)),
+\end{align*}
+где $x$ не входит в $t$.
+\begin{definition}
+	Класс $\Delta_0$ содержит все \textit{ограниченные формулы},
+	то есть такие все вхождения кванторов в которые ограничены.
+\end{definition}
+\begin{problem}
+	Докажите, что если $\phi(\vec x) \in \Delta_0$,
+	который по параметрам $\vec n$ проверяет $\mathrm{PA} \models \phi(\vec x)$.
+\end{problem}
+\begin{definition}
+	Определим $\Sigma_n$, $\Pi_n$:
+	$\Sigma_0 = \Pi_0 = \Delta_0$,
+	$\Sigma_{n + 1} = \{ \exists x \phi(x, y) \mid \phi \in \Pi_n \}$,
+	$\Pi_{n + 1} = \{ \forall x \phi(x, y) \mid \phi \in \Sigma_n \}$,
+\end{definition}
+\begin{definition}
+	Будем говорить, что предикат $P \subseteq \N^k$ лежит в $\Sigma_n$ ($\Pi_n$),
+	если его можно определить формулой $\Sigma_n$($\Pi_n$)-формулой.
+	$P$ принадлежит $\Delta_n$, если он принадлежит и $\Sigma_n$, и $\Pi_n$.
+\end{definition}
+\begin{problem}
+	Докажите, что классы $\Sigma_n$- и $\Pi_n$-предикатов замкнуты относительно ограниченных кванторов.
+\end{problem}
+\begin{problem}
+	Докажите, что $\Sigma_n$ замкнуты относительно квантора существования, а $\Pi_n$ --- всеобщности.
+\end{problem}
+\begin{problem}
+	Докажите, что классы $\Sigma_n$- и $\Pi_n$-предикатов замкнуты относительно объединения, пересечения и дополнения.
+\end{problem}
+\begin{problem}
+	Докажите, что любая арифметическая формула\footnote{формула арифметики $\mathrm{PA}$} эквивалентна некоторой формуле из $\Sigma_n$.
+\end{problem}
+\begin{theorem}
+	Предикат $P \subseteq \N^k$ является $\Sigma_1$-определимым в том и только в том случае, когда $P$ перечислим\footnote{%
+	Существует машина Тьюринга, выводящая только элементы $P$ по одному}.
+\end{theorem}
+\begin{problem}[ (Легкая стрелка теоремы)]
+	Докажите, что $\Sigma_1$-предикаты перечислимы.
+\end{problem}
+Для доказательства обратной стрелки нам понадобится следующий неформальный тезис Чёрча:
+\begin{center}
+	\textit{Всякая вычислимая функция является частично рекурсивной.}
+\end{center}
+\begin{problem}
+	Докажите, что график любой рекурсивной функции $\Sigma_1$-определим.
+\end{problem}
+\begin{problem}
+	Покажите, что из предыдущей задачи следует обратная стрелка теоремы.
+\end{problem}
+\end{document}
