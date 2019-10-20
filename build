@@ -1,0 +1,5 @@
+#!/bin/sh
+for list in Г? ТА? Я1 ЛП
+do
+    lualatex --output-directory=out "$list"/*.tex
+done

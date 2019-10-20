@@ -24,7 +24,7 @@
 \RequirePackage[TU]{fontenc}
 \RequirePackage[lutf8]{luainputenc}
 \RequirePackage{fontspec}
-\setmainfont{Times New Roman}
+\setmainfont{CMU Serif}
 \endinput
 %%
 %% End of file `lua.clo'.

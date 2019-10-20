@@ -41,27 +41,30 @@
 \input{pdf.clo}
 \fi
 \RequirePackage[russian]{babel}
-\RequirePackage{enumitem}
+\RequirePackage[inline]{enumitem}
 \RequirePackage{textcomp, multicol}
 \RequirePackage{mathtext}
 \RequirePackage{indentfirst}
 \RequirePackage{amsmath, amssymb, amsfonts, amsthm}
+\RequirePackage{mathtools, mathabx}
 \RequirePackage{epstopdf}
 \RequirePackage{graphicx}
 \RequirePackage{forloop}
 \RequirePackage{datetime2}
+\RequirePackage{microtype}
 \relax
 \tolerance 4000
 \newcommand{\listok@name}{Фамилия, Имя}
 \renewcommand{\maketitle}{%
 \begin{center}%
-{\Large \textit{ \textbf{ \underline{%
+{\Large \textit{\textbf{\underline{%
 Устное собеседование
 }}}}
 \end{center}
 }
 \DTMsetup{datesep=.}
 \DTMsetstyle{ddmmyyyy}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
 \renewcommand{\@oddhead}{
 \vbox{\hbox to\textwidth{\listok@name\hfil \strut
 \listok@date
@@ -72,19 +75,25 @@
 \renewcommand{\le}{\leqslant}
 \renewcommand{\ge}{\geqslant}
 \renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\phi}{\varphi}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\Cx}{\mathbb{C}}
+\renewcommand{\Re}[1]{\operatorname{Re}{#1}}
+\renewcommand{\Im}[1]{\operatorname{Im}{#1}}
 \newcommand{\Zm}[1]{\mathbb{Z}_{#1}}
+\renewcommand{\Prob}[1]{\mathbb{P}\left [ #1 \right ]}
+\newcommand{\ProbV}[2]{\mathbb{P}_{#1}\left [ #2 \right ]}
+\DeclareMathOperator{\Expect}{\mathbb{E}}
 \newcommand{\wdt}{\widetilde}
 \newcommand{\pt}[1]{$\text{#1}^\circ$}
 \newcommand{\point}{${}^\circ$}
 \newcommand{\hard}{${}^\ast$}
 \let\existssym\exists
 \renewcommand*{\exists}[1]{\existssym #1~\;~}
-\newcommand*{\existsone}[1]{\existssym ! #1~\;~}
+\newcommand*{\existsone}[1]{\existssym! #1~\;~}
 \let\forallsym\forall
 \renewcommand*{\forall}[1]{\forallsym #1~\;~}
 \renewenvironment{abstract}{\quotation\itshape\centering}{\endquotation}
@@ -97,16 +106,15 @@
 \newtheorem{corollary}{Следствие}
 \newtheorem*{corollary*}{Следствие}
 \theoremstyle{definition}
-\newtheorem*{definition}{Определение}
 \newtheorem{note}{Замечание}
 \newtheorem*{note*}{Замечание}
-\newtheoremstyle{problem}{\topsep}{}{\normalfont}{}{\bfseries}{.}{ }%
-{\thmname{#1}\thmnumber{ #2#3}}
+\newtheoremstyle{problem}{0pt}{0pt}{\normalfont}{}{\bfseries}{.}{ }{\thmname{#1}\thmnumber{ #2}\textit{#3}}
 \theoremstyle{problem}
 \newtheorem{example}{Пример}
 \newtheorem*{example*}{Пример}
 \newtheorem{problem}{Задача}
 \newtheorem*{problem*}{Задача}
+\newtheorem*{definition}{Определение}
 \renewcommand \theproblem {%
 \@arabic\c@problem
 }
@@ -143,8 +151,20 @@
 }
 \AddEnumerateCounter{\Asbuk}{\@Asbuk}{Ы}
 \AddEnumerateCounter{\asbuk}{\@asbuk}{ы}
-\setlist[itemize]{nolistsep}
-\setlist[enumerate]{nolistsep, label = \asbuk*)}
+\setlist[itemize]{nosep, nolistsep}
+\newlist{probenum}{enumerate}{1}
+\newlist{probparts}{enumerate*}{1}
+\setlist[enumerate]{nosep, nolistsep}
+\setlist[probenum]{nosep, nolistsep, label = \textbf{(\asbuk*)}}
+\setlist[probparts]{nosep, nolistsep, label = \textbf{(\asbuk*)}}
+\newenvironment{multienum}[1]
+{
+\begin{probenum}
+\begin{multicols}{#1}
+}{
+\end{multicols}
+\end{probenum}
+}
 \endinput
 %%
 %% End of file `ustn.cls'.
