@@ -1,0 +1,178 @@
+\documentclass[a4paper, 12pt, num=ТА3]{listok}
+\usepackage{bm}
+\usepackage{scalerel}
+\usepackage{bussproofs}
+\usepackage{tikz}
+\usepackage{epigraph}
+\usepackage{bussproofs}
+\usepackage{rotating}
+\usepackage{listings}
+\usetikzlibrary{matrix}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows}
+
+\newcommand*{\MP}{\mathrm{MP}}
+\renewcommand{\phi}{\varphi}
+\DeclareMathOperator{\Dom}{Dom}
+%\newcommand*{\hm}[1]{#1\nobreak\discretionary{}{\hbox{$\mathsurround=0pt #1$}}{}} %перед знаком для его дублирования при переносе формулы
+
+\begin{document}
+\title{Нумерация}
+\maketitle
+\begin{definition}
+	Символом $\simeq$ обозначим следующее отношение:
+	\[
+		a \simeq b = \left \{ \begin{aligned}
+					\top, & (Defined(a) \wedge Defined(b) \wedge a = b) \vee (\neg Defined(a) \wedge \neg Defined(b)), \\
+					\bot, & \quad{} \text{иначе}.
+				\end{aligned} \right .
+	\]
+\end{definition}
+Для дальнейших результатов нам понадобится пронумеровать все вычислимые функции в виде $\phi_i^m$ так, что верно следующее:
+\begin{enumerate}[label=\arabic*.]
+	\item Для любого $m \in \N$ верно, что $\phi_i^m \colon \N^m \to \N$.
+	\item При фиксированном $m$ \textit{универсальная} функция
+		\[
+			u^m(i, x_1, \ldots, x_m) \simeq \phi_i^m(x_1, \ldots, x_m)
+		\]
+		вычислима.
+	\item Нумерация выдерживает \textit{обощённое каррирование}: для всех $m, n \ge 1$ существует тотальная вычислимая функция $s \colon \N^{m + 1} \to \N$ такая,
+		что при всех $k, x_1, \ldots, x_m, y_1, \ldots, y_n \in \N$:
+		\[
+			\phi_k^{m + n}(x_1, \ldots, x_m, y_1, \ldots, y_n) \simeq \phi_{s(k, \vec{x})}^n(\vec{y}).
+		\]
+\end{enumerate}
+\begin{problem}
+	\textbf{а.} Докажите, что множество всех вычислимых функций $m$-арных функций $\phi_i$ перечислимо.
+	\textbf{б.} Докажите, что множество всех вычислимых функций перечислимо.
+\end{problem}
+\begin{problem}
+	Докажите, что требуемая нумерация существует.
+\end{problem}
+\begin{problem}
+	Доказать, что существует тотальная вычислимая функция $h \colon \N^2 \to \N$ такая, что $\phi^1_{h(i,j)} (x) \simeq \phi^1_i (x) + \phi^1_j (x)$.
+\end{problem}
+\begin{problem}
+	Доказать, что существует тотальная вычислимая функция $h \colon \N^2 \to \N$ такая, что $\phi^1_{h(i,j)} (x) \simeq \phi^1_i (\phi_j^1(x))$.
+\end{problem}
+\begin{problem}
+	Доказать, что существует тотальная вычислимая функция $h \colon \N^3 \to \N$ такая,
+	что $\phi^1_{h(i,j,k)}(x) \simeq \phi^1_k (x)? \phi^1_i (x) : \phi^1_j(x)$ (условная операция в С).
+\end{problem}
+\begin{problem}
+	Доказать, что существует тотальная вычислимая функция $h \colon \N^2 \to \N$ такая, что
+	\begin{align*}
+		\phi^1_{h(i, j)}(x) \simeq \{ &  \\
+			& while(\phi^1_i(x) > 0) \; \; x = \phi^1_j (x); \\
+			& return \; x;  \\
+		\} & 
+	\end{align*}
+\end{problem}
+\begin{problem}[ (Свойство главности нумерации $\phi^1_i$)]
+	Пусть у нумерации $\psi_0(x), \psi_1(x), \ldots$ некоторого семейства вычислимых функций универсальная функция
+	$v(i, x) \simeq \psi_i(x)$ вычислима\footnote{такие нумерации называются \textit{вычислимыми}}.
+	Доказать, что существует тотальная вычислимая функция $h$ такая, что $\psi_i(x) \simeq \phi^1_{h(i)} (x)$.
+\end{problem}
+\begin{problem}
+	Пусть $g \colon \N \to \N$ фиксированная вычислимая функция, $\zeta$ --- нигде не определенная функция,
+	$A \subseteq \N$ --- перечислимое множество.
+	Доказать, что существует тотальная вычислимая функция $h$ такая, что
+	\[
+		\phi^1_{h(i)} = \left \{ \begin{aligned}
+					g, & i \in A,
+					\zeta, & i \ni A.
+				\end{aligned} \right .
+	\]
+\end{problem}
+\begin{problem}
+	Говорят, что множество $A \subset \N^k$ \textit{$m$-сводится} к множеству $B \subset \N^l$ (обозначается $A \le_m B$),
+	если существует тотальная вычислимая функция $f \colon \N^k \to \N^l$ такая, что $x \in A \Leftrightarrow f(x) \in B$.
+	Доказать, что
+	\begin{enumerate}
+		\item отношение $\le_m$ рефлексивно и транзитивно;
+		\item если $A \le_m B$ и $B$ разрешимо (перечислимо), то $A$ тоже разрешимо (перечислимо).
+	\end{enumerate}
+\end{problem}
+\begin{problem}
+	Доказать, что каждое перечислимое множество $A \subseteq \N$ $m$-сводится к множествам:
+	\begin{enumerate}
+		\item $\{i \mid \phi^1_i(i) определено\}$;
+		\item $\{i \mid \phi^1_i(5) = 25\}$;
+		\item $\{i \mid \phi^1_i(i) = 99\}$;
+		\item $\{i \mid \phi^1_i \quad \text{тотальна}\}$.
+	\end{enumerate}
+\end{problem}
+\begin{problem}
+	Доказать, что каждое коперечислимое множество $m$-сводится к $\{i \mid \phi^1_i\quad\text{нигде не определена}\}$.
+\end{problem}
+\theme{Негативные результаты}
+\begin{problem}
+	\textbf{а.}\footnote{Подсказка: попытатьс найти значение $g(k)$, где $g$ --- кандидат на продолжение, а $k$ --- его номер}
+	Доказать, что функция $f(x) \simeq \phi^1_x(x) + 1$ вычислима, но не имеет вычислимых тотальных продолжений.
+	\textbf{б.} Доказать, что множество $K = \{x \mid \phi^1_x(x)\quad\text{определена}\}$ перечислимо, но не разрешимо.
+	\textbf{в.} Доказать, что множество $STOP = \{(i, x) \mid \phi^1_i(x) \quad\text{определена}\}$ перечислимо, но не разрешимо.
+\end{problem}
+\begin{problem}
+	\textbf{а.} Доказать, что функция
+	\[
+		f(x) = \left \{ \begin{aligned}
+				179, & \phi^1_x(x) = 57 \\
+				57, & \quad \text{иначе.}
+			\end{aligned} \right .
+	\]
+	не вычислима.
+	\textbf{б.} Доказать, что множество $\{x \mid \phi^1_x(x) = 179\}$ перечислимо, но не разрешимо.
+\end{problem}
+\begin{problem}
+	Пусть фиксирована машина Тьюринга $M$ вычисления универсальной функции
+	$u^1(i, x)$ и $T_M(i, x)$ --- время (число шагов) ее работы на входе $i, x$.
+	\begin{enumerate}
+		\item Проверить, что функция $T$ вычислима;
+		\item Проверить, что $(T (i, x) \text{ --- определено}) \Leftrightarrow (φ_i(x) \text{ --- определено})$;
+		\item Проверить, что $\{(i, x, t) \mid T(i, x) \le t\}$ --- разрешимо.
+		\item Пусть $h \colon \N \to \N$ тотальная вычислимая функция.
+			Доказать, что тотальная функция
+			\[
+				f(x) = \left \{ \begin{aligned}
+						\phi^1_x(x) + 1, & T(i, x) \le h(x) \\
+						0.
+					\end{aligned} \right .
+			\]
+			вычислима, но не вычислима за время $h$, т.е. $\forall{i} \exists{x} f = \phi_i \to T (i, x) > h(x)$.
+		\item Построить тотальную вычислимую функцию со значениями $\{0,1\}$, которая также не вычислима за время $h$.
+	\end{enumerate}
+\end{problem}
+\begin{problem}[ (Теорема Райса)]
+	Пусть $\mathcal{P}$ --- семейство одноместных вычислимых функций, $\mathcal{P} \ne \emptyset$ и существует одноместная вычислимая функция $f \notin \mathcal{P}$.
+	Доказать, что его индексное множество $\{i \mid \phi^1_i \in \mathcal{P}\}$ неразрешимо.
+\end{problem}
+\begin{problem}
+	Доказать неразрешимость множеств:
+	\begin{enumerate}
+		\item $\{i \mid \phi^1_i \quad{} \text{тотальна}\}$;
+		\item $\{i \mid \phi^1_i \quad{} \text{нигде не определена}\}$;
+		\item $\{i \mid \phi^1_i (5) = 25\}$;
+		\item $\{i \mid \phi^1_i(5) \quad{} \text{определено}\}$;
+		\item $\{i \mid \phi^1_i \quad{} \text{монотонна}\}$;
+		\item $\{i \mid \phi^1_i \quad{} \text{тотальна}\}$;
+	\end{enumerate}
+\end{problem}
+\begin{problem}
+	Доказать неперечислимость множеств:
+	\begin{enumerate}
+		\item $\{i \mid \phi^1_i(5) \quad{}\text{не определено}\}$;
+		\item $\{i \mid \phi^1_i(5) \quad{} \text{не определено или $\ne 25$}\}$;
+		\item $\{i \mid \phi^1_i \quad{}\text{не принимает значений $> 25$}\}$;
+		\item $\{i \mid \neg(\exists{x} \phi^1_i(x) = x)\}$;
+	\end{enumerate}
+\end{problem}
+\begin{problem}
+	Доказать неразрешимость множеств:
+	\begin{enumerate}
+		\item $\{(i, j) \mid \phi^1_i \quad{} \text{есть продолжение $\phi^1_j$}\}$;
+		\item $\{(i, j) \mid \Dom(\phi^1_i) \cup \Dom(\phi^1_j) = \N \}$;
+		\item $\{(i, j) \mid \Dom(\phi^1_i) \cap \Dom(\phi^1_j) = \emptyset\}$;
+		\item $\{(i, j) \mid \phi^1_i, \phi^1_j \quad\text{тотальны и $\forall{x} \phi^1_i(x) = 2\phi^1_j(x)$}\}$;
+	\end{enumerate}
+\end{problem}
+\end{document}

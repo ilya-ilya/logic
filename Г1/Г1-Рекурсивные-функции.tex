@@ -1,0 +1,216 @@
+\documentclass[a4paper, 12pt, num=Г1]{listok}
+\usepackage{bm}
+\usepackage{scalerel}
+\usepackage{tikz}
+\usepackage{epigraph}
+\usepackage{bussproofs}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{rotating}
+\usetikzlibrary{matrix}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows}
+
+\newcommand*{\MP}{\mathrm{MP}}
+\renewcommand{\phi}{\varphi}
+\DeclareMathOperator{\Dom}{Dom}
+%\newcommand*{\hm}[1]{#1\nobreak\discretionary{}{\hbox{$\mathsurround=0pt #1$}}{}} %перед знаком для его дублирования при переносе формулы
+
+\begin{document}
+\title{Рекурсивные функции}
+\maketitle
+\begin{definition}
+	Определим по индукции класс \textit{примитивно рекурсивных функций $f \colon \N^k \to \N$}.
+	Объявим $z(x) = 0$, $S(x) = x + 1$ и $I_k^n(x_1, \dots, x_n) = x_k$ примитивно рекурсивными.
+	Если $f, g_1, \dots, g_n$~--- примитивно рекурсивные,
+	то их \textit{композиция} $h(\vec x) \equiv f(g_1(\vec x), \dots, g_n(\vec x))$ такова.
+	Так же имеется операция \textit{примитивной рекурсии}: по примитивно рекурсивным $g$, $h$ строится следующая $f$.
+	\[
+		\left \{
+			\begin{aligned}
+				f(0, \vec x) & = g(\vec x),\\
+				f(n + 1, \vec x) & = h(f(n, \vec x), n, \vec x).
+			\end{aligned}
+		\right .
+	\]
+\end{definition}
+\begin{problem}
+	Докажите, что примитивно рекурсивная функция тотально вычислима.
+	Иными словами, что существует машина Тьюринга, которая на любом входе $x \in \N^k$ завершает работу и выдаёт $f(x)$.
+\end{problem}
+\begin{problem}
+	Докажите, что можно вести рекурсию по любому аргументу функции\footnote{Подсказка: покажите, что если $f$ --- п.р.,
+	то $g(x, y) = f(y, x)$ такая же.}.
+\end{problem}
+\begin{problem}
+	Докажите, что следующие функции являются примитивно рекурсивными:
+	\begin{enumerate}
+	\begin{multicols}{2}
+		\item $x + y$;
+		\item $x \cdot y$;
+		\item
+		$
+			prev(x) = \left \{
+				\begin{aligned}
+					x - 1, &\quad\text{если $x > 0$,}\\
+					0, &\quad\text{если $x = 0$;}
+				\end{aligned}
+				\right .
+		$
+		\item
+		$
+			sign(x) = \left \{
+				\begin{aligned}
+					1, &\quad\text{если $x > 0$,}\\
+					0, &\quad\text{если $x = 0$;}
+				\end{aligned}
+				\right .
+		$
+		\item
+		$
+			x - y = \left \{
+				\begin{aligned}
+					x - y, &\quad\text{если $x > y$,}\\
+					0, &\quad\text{если $x \le y$;}
+				\end{aligned}
+				\right .
+		$
+		\item $\min(x, y)$;
+		\item $\max(x, y)$;
+		\item
+		$
+			case(x, y, z) = \left \{
+				\begin{aligned}
+					x, &\quad\text{если $z = 0$,}\\
+					y, &\quad\text{если $z > 0$;}
+				\end{aligned}
+				\right .
+		$
+		\item $rm(x, y)$, $qt(x, y)$ --- остаток и неполное частное от деления.
+	\end{multicols}
+	\end{enumerate}
+\end{problem}
+\begin{problem}
+	Докажите, что если $f(\vec x, y)$ примитивно рекурсивная, то
+	$\sum_{y < z (y \le z)} f(\vec x, y)$ и $\prod_{y < z (y \le z)} f(\vec x, y)$ примитивно рекурсивные.
+\end{problem}
+\begin{definition}
+	Скажем, что отношение $R \subseteq \N^k$ \textit{примитивно рекурсивно},
+	если примитивно рекурсивна его характеристическая функция
+	\[
+		\chi_R(\vec x) = \left \{
+			\begin{aligned}
+				1, &\quad\text{если $R(\vec x)$,}\\
+				0, &\quad\text{иначе.}
+			\end{aligned}
+		\right .
+	\]
+\end{definition}
+\begin{problem}
+	Докажите, что следующие отношения примитивно рекурсивны $=$, $<$, $\le$, <<$x$ делится на $y$>>, <<$x$ простое>>.
+\end{problem}
+\begin{problem}
+	Пусть $R \subseteq \N^{k + 1}$.
+	\textit{Ограниченные кванторы} задают соотношения $\exists{u<v} R(\vec x, u)$ и $\forall{u<v} R(\vec x, u)$.
+	Докажите, что если $R$ --- примитивно рекурсивное, то $\exists{u < v} R(\vec x, u)$, $\forall{u < v} R(\vec x, u)$ также.
+\end{problem}
+\begin{problem}
+	Рассмотрим \textit{ограниченный $\mu$--оператор}:
+	\[
+		\mu y < z.R(\vec x, y) = \left \{ \begin{aligned}
+				&\text{наименьшее $y$ такое, что $y < z$ и $R(\vec x, y)$, если такое существует,} \\
+				&\text{$z$, иначе.}
+			\end{aligned} \right .
+	\]
+	Докажите, что если $R$ --- примитивное рекурсивное, то $(\vec x, z) \mapsto \mu y < z.R(\vec x, y)$ также.
+\end{problem}
+\begin{problem}[ (разбор случаев)]
+	Пусть для $i, j = 1, \dots, n$ функции $g_i$ и отношения $\bigsqcup_i R_i = \N^k$ --- примитивно рекурсивны.
+	Тогда примитивно рекурсивна функция разбора случаев:
+	\[
+		f(\vec x) = \left \{ \begin{aligned}
+			g_1(\vec x), &\quad\text{если $R_1(\vec x)$}, \\
+			g_2(\vec x), &\quad\text{если $R_2(\vec x)$}, \\
+			\dots & \dots \\
+			g_n(\vec x), &\quad\text{если $R_n(\vec x)$}, \\
+		\end{aligned} \right .
+	\]
+\end{problem}
+\begin{problem}[ (совместная рекурсия)]\footnote{Полезно сначала решить задачу~\ref{seq}}
+	Пусть $g_1, g_2, h_1, h_2$ --- п.р.ф.
+	Для $i = 1, 2$ положим
+	\[
+		f_i (\vec x, 0) \hm = g_i(\vec x), f_i(\vec x, y + 1) = h_i(\vec x, y, f_1(\vec x, y), f_2(\vec x, y)).
+	\]
+	Докажите, что $f_i$ --- примитивно рекурсивные.
+\end{problem}
+\begin{problem}
+	Пусть $p_x$ --- простое число с номером $x$ ($p_0 = 2$).
+	Докажите, что $x \mapsto p_x$ --- п.р.ф.
+\end{problem}
+\begin{problem}
+	Докажите, что функция нумерации пар
+	\[
+		pair(x, y) = sign(x - y)\cdot (x^2 + 2y + 1)  + sign(y - x + 1) \cdot (y^2 + 2x)
+	\]
+	и её обратные $left(x)$ и $right(x)$ являются примитивно рекурсивными.
+\end{problem}
+\begin{definition}
+	\textit{Кодом} последовательности $a_0, \dots, a_n$ назовём число
+	\[
+		\lceil a_0, \dots, a_n \rceil = p_0^{a_0 + 1} \cdot p_1^{a_1+1} \cdot \ldots \cdot p_n^{a_n+1}.
+	\]
+	Для дальнейшего нам понадобится, чтобы функции работы с последовательностями оказались примитивно рекурсивными.
+\end{definition}
+\begin{problem}\label{seq}
+	Покажите, что следующие функции примитивно рекурсивны: $x[i] = \nu_{p_i}(x)$, $l(x)$~---число
+	различных простых делителей $x$, предикат $seq(x) = \text{<<$x$ --- код последовательности>>}$, конкатенация
+	\[
+		\lceil a_1, \dots, a_n \rceil * \lceil b_1, \dots b_m \rceil = \lceil a_1, \dots, a_n, b_1, \dots, b_m \rceil,
+	\]
+\end{problem}
+\begin{definition}
+	\textit{Возвратная рекурсия} --- это операция $f \mapsto f_\sharp (\vec x, y) = \prod_{u < y} {(p_u)}^{f(\vec x, u)}$.
+	Заметим, что для всех $i \le y$ верно, что $f(\vec x, i)~=~f_\sharp(\vec x, y + 1)[i]$.
+\end{definition}
+\begin{problem}
+	Пусть $h$ --- п.р.ф., то $f(\vec x, y) = h(\vec x, y, f_\sharp(\vec x, y))$ --- тоже.
+\end{problem}
+\begin{problem}
+	Пусть $\phi_n$ --- $n$-ое число Фибоначчи.
+	Докажите, что $n \mapsto \phi_n$ --- п.р.ф.
+\end{problem}
+\begin{definition}
+	\textit{Рекурсивные функции}  получаются при замыкании класса примитивно рекурсивных
+	функций относительно (неограниченного) $\mu$-оператора:
+	\[
+		f (\vec x) = \mu y.(g(\vec x, y) = 0)
+	\]
+
+	Мы считаем, что $f (\vec x) = y$, если $g(\vec x, y) = 0$ и для каждого $z < y$ значение $g(\vec x, z)$
+	определено и $g(\vec x, z) \ne 0$, и $f (\vec x)$ не определена иначе.
+\end{definition}
+Вообще говоря, существуют тотальные рекурсивные, но не примитивно рекурсивные функции.
+\begin{definition}
+	Функция Аккермана определяется так:
+	\[
+	\left \{
+	\begin{aligned}
+		Ack(0, x) &= x + 2,\\
+		Ack(n + 1, 0) &= Ack(n, 1), \\
+		Ack(n + 1, m + 1) &= Ack(n, Ack(n + 1, m))
+	\end{aligned}
+	\right .
+	\]
+\end{definition}
+\begin{problem}
+	Докажите, что $Ack$ --- тотально вычислимая функция, то есть для любого входа существует значение и его можно посчитать машиной Тьюринга.
+\end{problem}
+\begin{problem}
+	Докажите, что $Ack(2, m) \ge 2^m$.
+\end{problem}
+\begin{problem}[${}^\star$]
+	Докажите, что $k$-ветвь функции Аккермана растёт быстрее любой п.р.ф. с не более $k$ вложенными рекурсиями.
+	Получите из этого, что $Ack(n, n)$ не является п.р.ф. от одного аргумента.
+\end{problem}
+\end{document}

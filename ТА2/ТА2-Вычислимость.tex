@@ -1,0 +1,122 @@
+\documentclass[a4paper, 12pt, num=ТА2]{listok}
+\usepackage{bm}
+\usepackage{scalerel}
+\usepackage{bussproofs}
+\usepackage{tikz}
+\usepackage{epigraph}
+\usepackage{bussproofs}
+\usepackage{rotating}
+\usetikzlibrary{matrix}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows}
+
+\newcommand*{\MP}{\mathrm{MP}}
+\renewcommand{\phi}{\varphi}
+\DeclareMathOperator{\Dom}{Dom}
+%\newcommand*{\hm}[1]{#1\nobreak\discretionary{}{\hbox{$\mathsurround=0pt #1$}}{}} %перед знаком для его дублирования при переносе формулы
+
+\begin{document}
+\title{Вычислимость}
+\maketitle
+\begin{definition}
+	$f \colon \N^k \to \N^s$ \textit{тотально вычислима}, если существует машина Тьюринга,
+	на любом входе $(n_1 , \dots, n_k)$ вычисляющая $m = f (n_1, \dots, n_k)$.
+	Функция $f$ может быть \textit{частичной}, если $\Dom(f) \subsetneq \N^k$; тогда на остальных входах машина Тьюринга зацикливается.
+\end{definition}
+\begin{definition}
+	Множество $P \subseteq \N^k$ \textit{перечислимо},
+	если существует вычислимая функция $f$ такая, что область её определения равна $P$.
+\end{definition}
+\begin{problem}[\point]
+	Докажите, что $P \subseteq \N^k$ перечислимо тогда и только тогда,
+	когда существует вычислимая $f$ такая, что область её значений равна $P$.
+\end{problem}
+\begin{problem}[\point]
+	Докажите, что $\emptyset \ne P \subseteq \N^k$ перечислимо тогда и только тогда,
+	когда существует тотальная вычислимая $f$ такая, что область её значений равна $P$.
+\end{problem}
+\begin{definition}
+	Функция
+	\[
+		\chi_P(x) = \left \{ \begin{aligned}
+				1, & x \in P,\\
+				0, & x \notin P.
+				\end{aligned} \right .
+	\]
+	называется \textit{характеристической} функцией множества $P$.
+	Функция $\pi_P$, которая равна 1 на элементах $P$ и неопределена вне $P$, называется \textit{полухарактеристической}.
+\end{definition}
+\begin{definition}
+	Множество $P \subseteq \N^k$ \textit{разрешимо}, если его характеристическая функция вычислима,
+	то есть алгоритм, способный проверить произвольный вход из $\N^k$ на принадлежность $P$.
+\end{definition}
+\begin{definition}
+	Множество $P \subseteq \N^k$ \textit{полуразрешимо}, если его полухарактеристическая функция вычислима,
+	то есть алгоритм, способный проверить вход из $\N^k$ на принадлежность $P$.
+\end{definition}
+\begin{problem}[\point]
+	Приведите пример перечислимого, но не разрешимого множества.
+\end{problem}
+\begin{problem}
+	Проверьте разрешимость множеств:
+	\begin{enumerate}
+		\item всех четных чисел;
+		\item всех простых чисел;
+		\item данного конечного множества;
+		\item множества всех решений $(x, y) \in \N^2$ уравнения $x^2 - y^2 > 5$.
+	\end{enumerate}
+\end{problem}
+\begin{problem}\label{half}
+	Проверьте полуразрешимость множеств:
+	\begin{enumerate}
+		\item каждого разрешимого множества;
+		\item всех пар простых чисел  близнецов;
+		\item множества всех чисел, представимых в виде суммы квадратов попарно различных нечетных чисел;
+		\item множества тех $(a_0, a_1, a_2, a_3, a_4, a_5) \in \N^5$, для которых уравнение
+			$a_0 + a_1 x + a_2 x^2 + a_3 x^3 + a_4 x^4 + a_5 x^5 = 0$ имеет решение в целых числах.
+	\end{enumerate}
+\end{problem}
+\begin{problem}[\star]
+	Пользуясь определением перечислимого множества проверить перечислимость множеств из задачи~\ref{half}.
+\end{problem}
+\begin{problem}
+	Доказать исходя из определений:
+	\begin{enumerate}
+		\item если $A, B \subseteq \N$ разрешимы, то $A \cup B$, $A \cap B$, $\neg A$ также разрешимы.
+		\item если $A, B \subseteq \N$ полуразрешимы, то $A \cup B$, $A \cap B$ также полуразрешимы.
+		\item если $A, B \subseteq \N$ перечислимы, то $A \cup B$, $A \cap B$ также перечислимы.
+	\end{enumerate}
+\end{problem}
+\begin{problem}[ (Теорема Поста)]
+	\textbf{а.} Докажите, что множество $A \subseteq \N$ разрешимо тогда и только тогда, когда $A$ и его дополнение полуразрешимы.
+	\textbf{б\point.} Докажите, что $P\subseteq \N^k$ --- разрешимо тогда и только тогда, когда $P$ и $\N^k \setminus P$ одновременно перечислимы.
+\end{problem}
+\begin{problem}
+	Доказать, что для каждого полуразрешимого множества $A$ существует программа, которая работает вечно,
+	время от времени посылая в выходной поток натуральные числа $a \in A$ таким образом, что каждый элемент $A$ когда-нибудь в нем появится.
+\end{problem}
+\begin{problem}
+	Доказать, что класс всех полуразрешимых подмножеств $\N$ совпадает совпадает с классом всех перечислимых подмножеств $\N$\footnote{%
+	Подсказка: посмотрите на одну из соседних задач}.
+\end{problem}
+\begin{problem}
+	Доказать, что
+	\begin{enumerate}
+		\item Проекция перечислимого множества $R \in \N^2$ на первую координату является перечислимым множеством.
+		\item Каждое полуразрешимое множество может быть получено как проекция некоторого разрешимого множества.
+		\item Получить в качестве следствия из \textbf{а.},\textbf{б.}, что каждое полуразрешимое множество перечислимо.
+	\end{enumerate}
+\end{problem}
+\begin{problem}[\point{} (Теорема о графике)]
+	Докажите, что функция $f$ вычислима тогда и только тогда, когда
+	её график $\Gamma_f = \{ (x, y) \mid f(x) = y \}$ перечислим.
+\end{problem}
+\begin{problem}
+	\textbf{а.} Доказать, что у тотальной вычислимой функции $f \colon \N \to \N$ график $\{(x, y) \mid y = f (x), x \in \Dom f\}$ разрешим.
+	\textbf{б.} Построить пример нетотальной вычислимой функции $f \colon \N \to \N$ с разрешимым графиком.
+\end{problem}
+\begin{problem}[ (Теорема об униформизации)]
+	Доказать, что каждое перечислимое подмножество $A \subseteq \N^2$ содержит в себе график некоторой вычислимой функциии $f \colon \N \to \N$,
+	определенной во всех точках проекции множества $A$ на первую координату.
+\end{problem}
+\end{document}

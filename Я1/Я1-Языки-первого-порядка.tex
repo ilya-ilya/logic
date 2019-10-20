@@ -1,0 +1,120 @@
+\documentclass[a4paper, 12pt, num=Я1]{listok}
+\usepackage{bm}
+\usepackage{scalerel}
+\usepackage{tikz}
+\usepackage{epigraph}
+\usepackage{bussproofs}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{rotating}
+\usepackage{mathtools}
+\usetikzlibrary{matrix}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows}
+
+\newcommand*{\MP}{\mathrm{MP}}
+\renewcommand{\phi}{\varphi}
+\DeclareMathOperator{\Dom}{Dom}
+%\newcommand*{\hm}[1]{#1\nobreak\discretionary{}{\hbox{$\mathsurround=0pt #1$}}{}} %перед знаком для его дублирования при переносе формулы
+
+\begin{document}
+\title{Языки первого порядка}
+\maketitle{}
+\begin{definition}
+	\textit{Сигнатура} $\Sigma = (Cnst, F_n, Pr)$ --— это тройка множеств:
+	фиксированный набор констант, функциональных символов и предикатных символов.
+	Она определяет \textit{язык первого порядка (элементарный язык)} сигнатуры $\Sigma$.
+	Синтаксис языка содержит определения правильно построенных выражений двух сортов --— термов и формул.
+	Термы делаются из переменных $Var = \{x_0, x_1, \ldots\}$ и функциональных констант.
+	Формулы делаются подстановкой термов в предикаты, при попомщи связок $\neg$, $\vee$, $\wedge$, $\rightarrow$, $\leftrightarrow$
+	и кванторов $\forallsym$, $\existssym$.
+\end{definition}
+\begin{problem}
+	Сигнатура содержит двухместные $=$, $\in$, $\perp$.
+	Констант нет. Носитель интерпретации $M$ --— все точки и прямые на плоскости.
+	Предикатные символы интерпретируются равенством, принадлежностью (точка лежит на прямой) и перпендикулярностью (прямых).
+	Выразить:
+	\begin{enumerate}
+		\item <<$x$ --— точка>>, <<$x$ --— прямая>>.
+		\item <<Прямые $x$ и $y$ параллельны>>.
+		\item <<$x$, $y$, $z$ --— вершины (невырожденного) треугольника>>.
+		\item <<Высоты каждого треугольника пересекаются в одной точке>>.
+		\item <<Точки $x$, $y$, $z$, $t$ являются последовательными вершинами параллелограмма>>.
+		\item <<Точка $z$ делит отрезок $x$, $y$ пополам>>.
+	\end{enumerate}
+\end{problem}
+\begin{problem}[(Язык арифметики)]
+	На множестве натуральных чисел заданы трехместные предикаты $S(x, y, z) = \text{<<$x+y = z$>>}$, $P(x, y, z) = \text{<<$x\cdot y = z$>>}$.
+	На языке первого порядка с предикатными символами $S$, $P$ записать:
+	\begin{enumerate}
+		\item формулы с одной свободной переменной $a$, истинные тогда и только тогда, когда $a = 0$, $a = 1$, $a = 2$, $a$ --— чётное число,
+			$a$ —-- нечётное число;
+		\item формулы с двумя свободными переменными $a$ и $b$, истинные тогда и только тогда, когда $a = b$, $a \le b$, $a$ делит $b$;
+		\item формулы с тремя свободными переменными $a$, $b$ и $c$, истинные тогда и только тогда, когда $a$ --— наименьшее общее кратное
+			чисел $b$ и $c$, $a$ --— наибольший общий делитель чисел $b$ и $c$.
+	\end{enumerate}
+\end{problem}
+\begin{problem}
+	Доказать выразимость в стандартной интерпретации языка арифметики условия <<$y = 2x$>>.
+\end{problem}
+\begin{problem}[(Техника доказательства невыразимости)]
+	Доказать, что если отношение не сохраняется при некотором автоморфизме модели, то оно невыразимо\footnote{\textit{Автоморфизм}
+	--— это биекция носителя на себя, сохраняющая все сигнатурные операции, отношения и константы.}.
+\end{problem}
+\begin{problem}
+	Выразимы ли следующие отношения?
+	\begin{enumerate}
+		\item $a = b$, $b = a + 1$, $c = a + b$ в $(\Z, <)$.
+		\item $a = 0$, $a = b$, $a < b$ в $(\Z, a + b = c)$.
+		\item $a = b, a = 1, a = 3$ в $(\N, a \vdots b)$, где $a \vdots b \Leftrightarrow \exists{k} a = k \cdot b$.
+		\item $a = b, |a − b| = 2$ в $(\R, |a − b| = 1)$.
+		\item $a < b, a = 0, a = 1, a = 2$ в $(\N, a + b = c)$.
+		\item <<$a$ --— простое число>> в $(\N, a \vdots b)$.
+	\end{enumerate}
+\end{problem}
+\begin{problem}
+	Выразимы ли следующие отношения?
+	\begin{multienum}{2}
+		\item $a = 1, a = 2$ в $(\Z, a + b = c)$.
+		\item $a = 0$ в $(\Z, a = b + 1)$.
+		\item $a = b + 1$ в $(\Z, a = b + 2)$.
+		\item $a = b + 1$ в $(\Z, |a − b| = 1)$.
+		\item $|a − b| = 3$ в $(\R, |a − b| = 1)$.
+	\end{multienum}
+\end{problem}
+\begin{definition}[Семантика]
+	Выбираем множество $M \ne \emptyset$ (\textit{носитель}) и интерпретацию $I$ сигнатуры $\Sigma$ в $M$:
+	\[
+		c \in Cnst \mapsto \bar{c} \in M, f^n \in Fn \mapsto \bar{f} \colon M^n \to M, P^n \in Pr \mapsto \bar{P} \subseteq M^n.
+	\]\footnote{Предикат $P \colon M^n \to \{\top, \bot\}$ отождествлен с его областью истинности $\bar P \subseteq M^n$.}
+	Каждая \textit{замкнутая} (т.е. без свободных переменных) формула становится обозначением для некоторого высказывания про конкретные
+	(заданные интерпретацией) элементы, операции и отношения на множестве $M$. Оно оказывается истинным или ложным.
+	Тем самым определяется истинность/ложность формулы в данной интерпретации (обозначение: $I \models \phi$).
+\end{definition}
+\begin{definition}
+	Замкнутая формула называется \textit{выполнимой}, если существует интерпретация, в которой она истинна.
+	\textit{Общезначимость} означает истинность во всех интерпретациях.
+\end{definition}
+\begin{problem}
+	Исследовать на выполнимость и общезначимость:
+	\begin{enumerate}
+		\item $\exists{x} P (x, x)$;
+		\item $(\forall{x} P(x) \vee Q(x)) \to (\forall{x} P(x)) \vee (\forall{x} Q(x))$;
+		\item $(\forall{x} P(x) \vee Q(x)) \to (\forall{x} P(x)) \vee (\exists{x} Q(x))$;
+		\item $(\exists x \forall y \exists z P(x, y, z)) \to (\forall x \exists y P(x, y, y))$;
+		\item $(\exists y \forall x P(x, y, y)) \to  (\forall x \exists y \forall z P(x, y, z))$;
+	\end{enumerate}
+\end{problem}
+\begin{problem}
+	Доказать, что следующая формула выполнима только в бесконечных интерпретациях:
+	\[
+		(\forall x \exists y Q(x, y)) \wedge (\forall x \forall y \forall z \neg Q(x, x) \wedge (Q(x, y) \to (Q(y, z) \to Q(x, z)))).
+	\]
+\end{problem}
+\begin{problem}
+	Доказать, что следующая формула истинна в каждой интерпретации с трехэлементным носителем:
+	\[
+		(\forall x \forall y \forall z R(x, x) \wedge (R(x, z) \to R(x, y) \vee R(y, z))) \to (\exists x \forall y R(x, y)).
+	\]
+\end{problem}
+\end{document}
